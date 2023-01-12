@@ -1,0 +1,36 @@
+<div style="display: flex; justify-content: end; margin-top:1.5rem;">
+  <button
+    *ngIf="massAssignmentState == 'Inactive'"
+    pButton
+    pRipple
+    type="button"
+    label="Asignación masiva de turnos de oficina"
+    class="p-button-outlined p-button-success"
+    (click)="activateMassAssignment()"
+  ></button>
+</div>
+<div
+  style="display: flex; justify-content: end"
+  *ngIf="
+    massAssignmentState == 'Executing' ||
+    massAssignmentState == 'Contractors Selected'
+  "
+>
+  <button
+    pButton
+    pRipple
+    type="button"
+    label="Continuar"
+    class="p-button-outlined p-button-success"
+    style="margin-right: 1rem"
+    (click)="continueMassAssignment()"
+  ></button>
+  <button
+    pButton
+    pRipple
+    type="button"
+    label="Cancelar"
+    class="p-button-outlined p-button-danger"
+    (click)="deactivateMassAssignment()"
+  ></button>
+</div>

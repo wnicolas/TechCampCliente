@@ -1,0 +1,46 @@
+<p-table [value]="workDays">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Identificación</th>
+      <th>Nombre</th>
+      <th>Fecha</th>
+      <th>Hora de inicio</th>
+      <th>Hora de finalización</th>
+      <th>Descripión</th>
+      <!-- <th>Turno activo</th> -->
+      <th>Día laboral</th>
+      <th>Turno trabajado</th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-workDay>
+    <tr>
+      <td>
+        {{ workDay.contractorDTO.id.contractorTypeId
+        }}{{ workDay.contractorDTO.id.contractorNumberId }}
+      </td>
+      <td>
+        {{ workDay.contractorDTO.name }} {{ workDay.contractorDTO.surname }}
+      </td>
+      <td>{{ workDay.day }}</td>
+      <td>{{ workDay.startTime }}</td>
+      <td>{{ workDay.finishTime }}</td>
+      <td>{{ workDay.shifDescription }}</td>
+      <!-- <td>{{ workDay.active }}</td> -->
+      <td>{{ workDay.workingDay }}</td>
+      <td>{{ workDay.shiftWorked }}</td>
+      <td>
+        <a
+          class="btn btn-info"
+          [routerLink]="['/jornada-laboral']"
+          [queryParams]="{
+            type_id: workDay.contractorDTO.id.contractorTypeId,
+            number_id: workDay.contractorDTO.id.contractorNumberId
+          }"
+        >
+          Ver/Asignar jornada</a
+        >
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

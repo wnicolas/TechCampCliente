@@ -1,0 +1,12 @@
+<p-menubar [model]="items">
+  <ng-template pTemplate="start">
+    <img
+      src="../../../assets/images/Logo TechCamp.png"
+      height="40"
+      class="mr-2"
+    />
+  </ng-template>
+  <ng-template pTemplate="end">
+    <button pButton label="Cerrar sesión" icon="pi pi-power-off" (click)="cerrarSesion()"></button>
+  </ng-template>
+</p-menubar>

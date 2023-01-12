@@ -1,0 +1,97 @@
+/* You can add global styles to this file, and also import other style files */
+a {
+  text-decoration: none;
+}
+.p-menubar {
+  background: #008c44;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0px;
+}
+.p-menubar
+  .p-menubar-root-list
+  > .p-menuitem
+  > .p-menuitem-link:not(.p-disabled):hover {
+  background-color: #fdda5b;
+}
+.p-menubar
+  .p-menubar-root-list
+  > .p-menuitem
+  > .p-menuitem-link
+  .p-menuitem-text {
+  color: #ffffff;
+}
+.p-menubar
+  .p-menubar-root-list
+  > .p-menuitem
+  > .p-menuitem-link
+  .p-menuitem-icon {
+  color: #ffffff;
+  margin-right: 0.5rem;
+}
+
+.p-button {
+  color: #495057;
+  background: #fdda5b;
+  border: 1px solid #ffffff;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  border-radius: 6px;
+}
+.p-button:hover {
+  color: #ffffff !important;
+  background: #008c44 !important;
+  border: 1px solid #fdda5b !important;
+}
+
+.p-button.p-button-info,
+.p-buttonset.p-button-info > .p-button,
+.p-splitbutton.p-button-info > .p-button {
+  color: #495057;
+  background: #fdda5b;
+  border: 1px solid #008c44;
+}
+.fc.fc-theme-standard .fc-toolbar .fc-button {
+  background: #008c44;
+  border: 1px solid #fdda5b;
+}
+.fc.fc-theme-standard .fc-toolbar .fc-button:disabled {
+  color: #ffffff;
+  background: #008c44;
+  border: 1px solid #fdda5b;
+}
+
+.fc.fc-theme-standard
+  .fc-toolbar
+  .fc-button.fc-dayGridMonth-button.fc-button-active,
+.fc.fc-theme-standard
+  .fc-toolbar
+  .fc-button.fc-timeGridWeek-button.fc-button-active,
+.fc.fc-theme-standard
+  .fc-toolbar
+  .fc-button.fc-timeGridDay-button.fc-button-active:hover {
+  background: #008c44;
+  border-color: #fdda5b;
+  color: #ffffff;
+}
+
+.fc.fc-theme-standard
+  .fc-toolbar
+  .fc-button.fc-dayGridMonth-button.fc-button-active,
+.fc.fc-theme-standard
+  .fc-toolbar
+  .fc-button.fc-timeGridWeek-button.fc-button-active,
+.fc.fc-theme-standard
+  .fc-toolbar
+  .fc-button.fc-timeGridDay-button.fc-button-active {
+  background: #008c44;
+  border-color: #fdda5b;
+}
+
+.fc.fc-theme-standard .fc-toolbar .fc-button:hover {
+  background: #008c44 !important;
+  border-color: #fdda5b !important;
+  color: #ffffff !important;
+}
+
+

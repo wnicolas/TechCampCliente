@@ -1,0 +1,245 @@
+<div *ngIf="loading">Loading...</div>
+
+<div *ngIf="!loading" class="demo-app">
+  <div class="demo-app-sidebar">
+    <div class="demo-app-sidebar-section">
+      <h2 *ngIf="idContractor">
+        Contratista:
+        <b>
+          {{ idContractor.contractorTypeId }}
+          {{ idContractor.contractorNumberId }}</b
+        >
+      </h2>
+    </div>
+    <div class="demo-app-sidebar-section">
+      <hr />
+      <h5>Turnos trabajados (mes actual):</h5>
+      <p-table
+        [scrollable]="true"
+        scrollHeight="350px"
+        *ngIf="workedDays.length > 0"
+        [value]="workedDays"
+        [tableStyle]="{ width: '22vw' }"
+        styleClass="p-datatable-gridlines p-datatable-sm"
+      >
+        <ng-template pTemplate="header">
+          <tr style="background: #008c44">
+            <th>Fecha</th>
+            <th>Turno</th>
+            <th>Inicio</th>
+            <th>Finalización</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-wd>
+          <tr style="background: #c5ffe0">
+            <td>{{ wd.DAY | date }}</td>
+            <td>{{ wd.TYPE }}</td>
+            <td>{{ wd.START_TIME }}:00</td>
+            <td>{{ wd.FINISH_TIME }}:00</td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <div *ngIf="workedDays.length == 0">
+        <img
+          src="../../assets/images/allGood.svg"
+          style="width: 22vw; margin: 3rem 0"
+          alt=""
+        />
+        <p class="text-center">El contratista no tiene turnos sin realizar.</p>
+      </div>
+    </div>
+    <div class="demo-app-sidebar-section">
+      <hr />
+      <h5>Turnos asignados no trabajados (mes actual):</h5>
+      <p-table
+        [scrollable]="true"
+        scrollHeight="350px"
+        *ngIf="notWorkedDays.length > 0"
+        [value]="notWorkedDays"
+        [tableStyle]="{ width: '22vw' }"
+        styleClass="p-datatable-gridlines p-datatable-sm"
+      >
+        <ng-template pTemplate="header">
+          <tr style="background: #008c44">
+            <th>Fecha</th>
+            <th>Turno</th>
+            <th>Inicio</th>
+            <th>Finalización</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-nwd>
+          <tr style="background: #ffdfdf">
+            <td>{{ nwd.DAY | date }}</td>
+            <td>{{ nwd.TYPE }}</td>
+            <td>{{ nwd.START_TIME }}:00</td>
+            <td>{{ nwd.FINISH_TIME }}:00</td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <div *ngIf="notWorkedDays.length == 0">
+        <img
+          src="../../assets/images/allGood.svg"
+          style="width: 22vw; margin: 3rem 0"
+          alt=""
+        />
+        <p class="text-center">El contratista no tiene turnos sin realizar.</p>
+      </div>
+    </div>
+    <div class="demo-app-sidebar-section"></div>
+  </div>
+
+  <div class="demo-app-main">
+    <full-calendar [options]="calendarOptions"></full-calendar>
+  </div>
+
+  <!-- Administrador -->
+  <div *ngIf="userType == 'Administrador'">
+    <!-- Actualizar ampliar jornada -->
+    <p-dialog
+      *ngIf="displayEvent"
+      header="Actualizar turno"
+      [(visible)]="displayEvent"
+    >
+      <div class="block" style="display: flex; justify-content: space-between">
+        <p-dropdown
+          [options]="shift"
+          [(ngModel)]="newShift"
+          optionLabel="type"
+        ></p-dropdown>
+        <button
+          pButton
+          type="button"
+          label="Actualizar"
+          class="p-button-outlined p-button-success"
+          (click)="updateEvent()"
+        ></button>
+        <button
+          pButton
+          type="button"
+          label="Eliminar"
+          class="p-button-outlined p-button-danger"
+          (click)="deleteEvent()"
+        ></button>
+      </div>
+      <hr class="my-4" />
+      <div class="block text-start">
+        <h5 class="my-3">Ampliar horario</h5>
+        <div class="flex">
+          <p>Inicio: {{ startExtended }}</p>
+          <p-slider
+            [(ngModel)]="startExtended"
+            [min]="0"
+            [max]="23"
+            [step]="1"
+          ></p-slider>
+        </div>
+        <br />
+        <div class="flex">
+          <p>Fin: {{ endExtended }}</p>
+          <p-slider
+            [(ngModel)]="endExtended"
+            [min]="0"
+            [max]="23"
+            [step]="1"
+          ></p-slider>
+        </div>
+        <div class="block py-3">
+          <span class="p-float-label mt-3">
+            <textarea
+              [rows]="5"
+              [cols]="40"
+              pInputTextarea
+              [(ngModel)]="extendedHourDescription"
+            ></textarea>
+            <label for="float-input">Motivo de la ampliación de horario</label>
+          </span>
+        </div>
+        <div class="my-2" style="display: flex; justify-content: end">
+          <button
+            pButton
+            type="button"
+            label="Extender horario"
+            class="p-button-outlined p-button-success"
+            (click)="extendShift()"
+          ></button>
+        </div>
+      </div>
+    </p-dialog>
+
+    <!-- Nueva jornada -->
+    <p-dialog
+      [style]="{ height: '37vh' }"
+      *ngIf="displayNewEvent"
+      header="Nueva jornada"
+      [(visible)]="displayNewEvent"
+    >
+      <div>
+        <div class="block">
+          <p-dropdown
+            [style]="{ width: '16vw' }"
+            [options]="shift"
+            [(ngModel)]="newShift"
+            optionLabel="type"
+          ></p-dropdown>
+          <p class="mt-3">Seleccione el turno que desea asignar.</p>
+        </div>
+        <div style="display: flex; justify-content: end">
+          <button
+            pButton
+            type="button"
+            label="Guardar"
+            class="p-button-outlined p-button-success mt-5"
+            (click)="saveEvent()"
+          ></button>
+        </div>
+      </div>
+    </p-dialog>
+  </div>
+  <!-- Contratista -->
+  <div *ngIf="userType == 'Contratista'">
+    <p-dialog
+      *ngIf="displayEvent"
+      header="De click en el botón para iniciar turno:"
+      [(visible)]="displayEvent"
+    >
+      <button
+        pButton
+        type="button"
+        label="Iniciar turno"
+        class="p-button-outlined p-button-success"
+        (click)="startEvent()"
+      ></button>
+    </p-dialog>
+  </div>
+  <p-dialog
+    *ngIf="displayExtendedHour"
+    header="Jornada extendida"
+    [(visible)]="displayExtendedHour"
+  >
+    <div class="block text-start">
+      <div class="flex">
+        <p>
+          Hora de inicio: <b> {{ startExtended }}:00</b>
+        </p>
+      </div>
+      <br />
+      <div class="flex">
+        <p>
+          Hora de finalización:<b>{{ endExtended }}:00</b>
+        </p>
+      </div>
+      <div class="block py-3">
+        <span class="p-float-label mt-3">
+          <textarea
+            readonly
+            [rows]="5"
+            [cols]="40"
+            pInputTextarea
+            [(ngModel)]="extendedHourDescription"
+          ></textarea>
+          <label for="float-input">Motivo de la ampliación de horario</label>
+        </span>
+      </div>
+    </div>
+  </p-dialog>
+</div>

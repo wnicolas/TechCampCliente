@@ -1,0 +1,57 @@
+<div
+  style="height: 80vh"
+  class="container d-flex justify-content-center align-items-center"
+>
+  <p-card header="Iniciar sesión">
+    <form [formGroup]="formGroup">
+      <div class="row">
+        <div class="col justify-content-center">
+          <p-selectButton
+            formControlName="userType"
+            [options]="userTypes"
+            optionLabel="type"
+          ></p-selectButton>
+        </div>
+      </div>
+      <div class="row py-4">
+        <div class="col">
+          <p-dropdown
+            formControlName="userTypeId"
+            [options]="idTypes"
+            optionLabel="type"
+          ></p-dropdown>
+        </div>
+        <div class="col">
+          <span class="p-float-label">
+            <input
+              formControlName="userNumberId"
+              id="float-input-user"
+              type="text"
+              pInputText
+            />
+            <label for="float-input-user">Usuario</label>
+          </span>
+        </div>
+      </div>
+      <span class="p-float-label">
+        <input
+          formControlName="password"
+          id="float-input-password"
+          type="float-input-password"
+          pInputText
+        />
+        <label for="float-input">Contraseña</label>
+      </span>
+      <div class="row p-3">
+        <button
+          pButton
+          type="button"
+          label="Iniciar sesión"
+          class="p-button-outlined p-button-success"
+          (click)="login()"
+          [disabled]="formGroup.invalid"
+        ></button>
+      </div>
+    </form>
+  </p-card>
+</div>
